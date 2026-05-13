@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 
 function CartPage() {
-  const { cart, updateQuantity, removeFromCart, total, clearCart } = useCart()
+  const { cart, updateQuantity, removeFromCart, total } = useCart()
 
   if (cart.length === 0) {
     return (
       <div className="cart-page">
         <h2>Carrito</h2>
         <p>El carrito está vacío.</p>
-        <Link to="/">Volver</Link>
+        <Link to="/">← Seguir comprando</Link>
       </div>
     )
   }
@@ -24,7 +24,7 @@ function CartPage() {
             <img src={item.image_url} alt={item.name} />
             <div className="item-details">
               <h3>{item.name}</h3>
-              <p>S/ {item.price.toFixed(2)}</p>
+              <p>Precio: S/ {item.price.toFixed(2)}</p>
             </div>
             <div className="item-controls">
               <button onClick={() => updateQuantity(item.id, item.quantity - 1)}>-</button>
@@ -37,10 +37,7 @@ function CartPage() {
       </div>
       <div className="cart-total">
         <h2>Total: S/ {total.toFixed(2)}</h2>
-        <Link to="/checkout">
-          <button className="checkout-btn">Proceder al Checkout</button>
-        </Link>
-        <button onClick={clearCart} style={{ marginLeft: '1rem' }}>Vaciar</button>
+        <p>Funcionalidad de checkout en Parte 3</p>
       </div>
     </div>
   )

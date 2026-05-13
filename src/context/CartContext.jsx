@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
-import { useAuth } from './AuthContext'
 
 const CartContext = createContext()
 
@@ -8,17 +7,12 @@ export function CartProvider({ children }) {
     const saved = localStorage.getItem('cart')
     return saved ? JSON.parse(saved) : []
   })
-  const { user } = useAuth()
 
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart))
   }, [cart])
 
   const addToCart = (product) => {
-    if (!user) {
-      alert('Debes iniciar sesión para agregar productos al carrito')
-      return
-    }
     setCart((prev) => {
       const existing = prev.find((item) => item.id === product.id)
       if (existing) {
@@ -31,12 +25,10 @@ export function CartProvider({ children }) {
   }
 
   const removeFromCart = (productId) => {
-    if (!user) return
     setCart((prev) => prev.filter((item) => item.id !== productId))
   }
 
   const updateQuantity = (productId, quantity) => {
-    if (!user) return
     if (quantity <= 0) {
       setCart((prev) => prev.filter((item) => item.id !== productId))
       return
